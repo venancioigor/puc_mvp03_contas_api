@@ -3,7 +3,6 @@ from flasgger import Swagger
 from flask_cors import CORS
 from database.database import  db, ma
 from config.swagger import template, swagger_config
-from routes.banco_route import bancos
 from routes.conta_route import contas
 from routes.cliente_route import clientes
 from routes.porquinho_route import porquinhos
@@ -28,7 +27,6 @@ db.init_app(app)
 ma.init_app(app)
 
 # Registrando endpoints
-app.register_blueprint(bancos)
 app.register_blueprint(contas)
 app.register_blueprint(clientes)
 app.register_blueprint(porquinhos)
