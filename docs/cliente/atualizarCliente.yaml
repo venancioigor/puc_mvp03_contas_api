@@ -1,0 +1,33 @@
+Atualiza o nome do cliente
+---
+tags:
+  - Cliente
+parameters:
+  - name: body
+    in: body
+    schema:
+      type: object
+      properties:
+        novo_nome:
+          type: string
+        cpf_do_cliente_a_alterar:
+          type: string
+    required: true
+    description: O nome do cliente, com cpf, que deve ser alterado
+responses:
+  201:
+    description: O cliente foi alterado com sucesso
+    schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: O ID do cliente alterado
+        nome:
+          type: string
+          description: O nome do cliente alterado
+        cpf:
+          type: string
+          description: O cpf do cliente alterado
+  400:
+    description: Os dados de entrada são inválidos

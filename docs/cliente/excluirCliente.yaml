@@ -1,0 +1,31 @@
+Exclui um determinado cliente
+---
+tags:
+  - Cliente
+parameters:
+  - name: body
+    in: body
+    schema:
+      type: object
+      properties:
+        cpf:
+          type: string
+    required: true
+    description: O nome do cliente, com cpf, que deve ser excluido
+responses:
+  200:
+    description: O cliente foi excluido com sucesso
+    schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: O ID do cliente excluido
+        nome:
+          type: string
+          description: O nome do cliente excluido
+        cpf:
+          type: string
+          description: O cpf do cliente excluido
+  400:
+    description: Os dados de entrada são inválidos

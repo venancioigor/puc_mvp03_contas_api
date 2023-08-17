@@ -34,6 +34,50 @@ def get_cliente():
     cliente_serialize = cliente_schema.dump(cliente)
     return jsonify(cliente_serialize)
 
+@clientes.route('/atualizarCliente/', methods=['PUT'])
+@swag_from('../docs/cliente/atualizarCliente.yaml')
+def atualizar_cliente():
+    try:
+        data = request.json
+
+        novo_nome = data['novo_nome']
+        cpf = data['cpf_do_cliente_a_alterar']
+
+        cliente = ClienteModel.query.filter_by(cpf=cpf).first()
+        if cliente is None:
+            return jsonify({'error': 'Cliente não encontrado'}), 404
+
+        cliente.nome = novo_nome
+        cliente.cpf = cpf
+        db.session.commit()
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Erro ao atualizar cliente.'}), 500
+
+    return jsonify({'message': 'Cliente atualizado com sucesso.'}), 200
+
+
+@clientes.route('/excluirCliente/', methods=['DELETE'])
+@swag_from('../docs/cliente/excluirCliente.yaml')
+def excluir_cliente():
+    try:
+        data = request.json
+        cpf = data['cpf']
+        cliente = ClienteModel.query.filter_by(cpf=cpf).first()
+        if cliente is None:
+            return jsonify({'error': 'Cliente não encontrado'}), 404
+
+        db.session.delete(cliente)
+        db.session.commit()
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Erro ao excluir cliente.'}), 500
+
+    return jsonify({'message': 'Cliente excluído com sucesso.'}), 200
+
+
 @clientes.route('/getClienteSaldoGeral')
 @swag_from('../docs/cliente/getClienteSaldoGeral.yaml')
 def saldo_geral():
