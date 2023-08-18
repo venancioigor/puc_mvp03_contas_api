@@ -1,0 +1,29 @@
+Atualiza o objetivo do porquinho
+---
+tags:
+  - Porquinho
+parameters:
+  - name: body
+    in: body
+    schema:
+      type: object
+      properties:
+        cpf:
+          type: string
+        novo_objetivo:
+          type: string
+        id_porquinho:
+          type: integer
+    required: true
+    description: O novo objetivo da conta porquinho.
+responses:
+  200:
+    description:  O novo objetivo da conta porquinho.
+    schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: O ID da conta porquinho aberta
+  400:
+    description: Os dados de entrada são inválidos

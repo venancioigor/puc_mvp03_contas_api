@@ -41,6 +41,34 @@ def get_all_porquinhos():
     porquinhos_serializado = porquinhos_schema.dump(porquinhos)
 
     return jsonify(porquinhos_serializado)
+
+@porquinhos.route('/atualizarPorquinho/', methods=['PUT'])
+@swag_from('../docs/porquinho/atualizarPorquinho.yaml')
+def atualizar_porquinho():
+    try:
+        data = request.json
+        cpf = data['cpf']
+        novo_objetivo = data['novo_objetivo']
+        id_porquinho = data['id_porquinho']
+
+        cliente = ClienteModel.query.filter_by(cpf=cpf).first()
+        if not cliente:
+         return jsonify({'message': 'Cliente não encontrado.'}), 404
+        
+        porquinho = PorquinhoModel.query.filter_by(id=id_porquinho, id_cliente=cliente.id).first()
+        if porquinho is None:
+            return jsonify({'error': 'Porquinho não encontrado'}), 404
+
+        porquinho.objetivo = novo_objetivo
+        db.session.commit()
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Erro ao atualizar porquinho.'}), 500
+
+    return jsonify({'message': 'Porquinho atualizado com sucesso.'}), 200
+
+
     
 @porquinhos.route('/porquinho/transferirValorEntrePorquinho', methods=['POST'])
 @swag_from('../docs/porquinho/transferirValorEntrePorquinhos.yaml')
