@@ -33,6 +33,7 @@ app.register_blueprint(porquinhos)
 
 # Executar o aplicativo Flask
 if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=True)
+    with app.app_context():
+        db.create_all()
+        app.run(debug=True)
 
