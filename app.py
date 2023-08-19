@@ -15,7 +15,6 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///Cofre.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-#Adicionar o bloco "definitions" no Swagger
 app.config['SWAGGER'] = {
     'title': 'Meu cofre - API',
     'uiversion': 3
@@ -32,7 +31,6 @@ app.register_blueprint(contas)
 app.register_blueprint(clientes)
 app.register_blueprint(porquinhos)
 
-# Executar o aplicativo Flask
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
