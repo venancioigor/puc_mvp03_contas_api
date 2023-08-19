@@ -13,5 +13,8 @@ COPY . /app
 # Instale as dependências
 RUN pip install -r requirements.txt
 
+# Exponha a porta 5001 (a porta que a aplicação Flask está ouvindo)
+EXPOSE 5001
+
 # Defina o comando de inicialização (substitua pelo comando real de inicialização da sua API)
 CMD ["python", "app.py"]
